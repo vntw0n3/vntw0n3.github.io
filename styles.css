@@ -67,7 +67,8 @@ svg { flex-shrink: 0; }
   font-family: var(--mono); font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em;
   text-decoration: none;
 }
-.wordmark span { color: var(--accent); }
+.wordmark .cursor { color: var(--accent); animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
 .nav-menu { display: flex; align-items: center; gap: 4px; }
 .nav-menu a {
   display: block; padding: 8px 14px; border-radius: 999px;
@@ -128,17 +129,28 @@ svg { flex-shrink: 0; }
 
 /* ---------- Hero ---------- */
 .hero {
-  position: relative; overflow: hidden;
-  padding: clamp(72px, 13vw, 140px) 0 clamp(56px, 9vw, 104px);
-  background:
-    linear-gradient(var(--bg) 0, transparent 30%, transparent 70%, var(--bg) 100%),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 56px 56px,
-    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 56px 56px;
+  position: relative; overflow: hidden; isolation: isolate;
+  padding: clamp(72px, 13vw, 140px) 0 clamp(96px, 14vw, 168px);
+  background: radial-gradient(120% 70% at 50% 100%, rgba(92, 224, 198, 0.10), transparent 60%), var(--bg);
 }
-.hero::after {
-  content: ""; position: absolute; width: 640px; height: 640px; right: -200px; top: -240px;
-  background: radial-gradient(circle, rgba(92, 224, 198, 0.14), transparent 65%); pointer-events: none;
+/* 3D floor: a grid tilted back in perspective, fading toward a glowing horizon */
+.hero-grid {
+  position: absolute; left: -50%; right: -50%; bottom: 0; height: 70%;
+  z-index: -1; pointer-events: none;
+  perspective: 420px; perspective-origin: 50% 0%;
 }
+.hero-grid::before {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(90deg, rgba(92, 224, 198, 0.34) 1px, transparent 1px),
+    linear-gradient(rgba(92, 224, 198, 0.34) 1px, transparent 1px);
+  background-size: 72px 72px;
+  transform: rotateX(62deg); transform-origin: 50% 100%;
+  -webkit-mask-image: linear-gradient(to top, #000 25%, transparent 92%);
+          mask-image: linear-gradient(to top, #000 25%, transparent 92%);
+  animation: grid-drift 5s linear infinite;
+}
+@keyframes grid-drift { to { background-position: 0 72px; } }
 .hero .container { position: relative; z-index: 1; }
 .kicker, .label {
   font-family: var(--mono); font-size: .88rem; font-weight: 500; color: var(--accent);

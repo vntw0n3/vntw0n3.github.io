@@ -1,4 +1,4 @@
-# vntw0n3: freelance site
+# antonio: freelance site (repo: vntw0n3)
 
 Single-page static site: plain HTML, CSS and JS. No build step. Kept separate from the job portfolio (`antoniograyportfolio`) on purpose: different brand, no cross-links, no employer details.
 
