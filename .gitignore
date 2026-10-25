@@ -1,3 +1,5 @@
 img/raw/
 .claude/
 Thumbs.db
+.deploy/
+.wrangler/
